@@ -25,35 +25,7 @@ object DatabaseHandler {
         )
     }
 
-    fun parsePortScanResult(results: List<KafkaResult>) {
-        val updateTasks = ArrayList<Task>()
-        val updateIPs = ArrayList<Long>()
-        val insertPorts = ArrayList<BatchInsertPort>()
-        for (result in results) {
-            // task status update
-            if (result.status == 1) {
-                updateTasks.add(Task(result.taskID, 21000, result.desc))
-                continue
-            }
-            updateTasks.add(Task(result.taskID, 20030, ""))
-            // host update and port insert
-            for (host in result.result) {
-                val intIP = IPConverter.iNetString2Number(host.address)
-                updateIPs.add(intIP)
-                for (port in host.ports) {
-                    insertPorts.add(
-                        BatchInsertPort(
-                            intIP,
-                            Integer.parseInt(port.portID),
-                            port.protocol,
-                            port.service,
-                            port.product
-                        )
-                    )
-                }
-            }
-        }
-        // database handle
+    fun batchUpdateTaskStatus(updateTasks: List<Task>) {
         TableTask.batchUpdate {
             for (task in updateTasks) {
                 item {
@@ -65,6 +37,9 @@ object DatabaseHandler {
                 }
             }
         }
+    }
+
+    fun batchUpdateIPFlag(updateIPs: List<Long>) {
         IP.batchUpdate {
             for (ip in updateIPs) {
                 item {
@@ -72,6 +47,9 @@ object DatabaseHandler {
                 }
             }
         }
+    }
+
+    fun batchInsertPort(insertPorts: List<BatchInsertPort>) {
         TablePort.batchInsert {
             for (port in insertPorts) {
                 item {
