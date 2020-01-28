@@ -1,2 +1,2 @@
-rootProject.name = "port_scan_rr"
+rootProject.name = "port-scan-rr"
 
