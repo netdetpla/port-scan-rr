@@ -12,19 +12,10 @@ import java.time.Duration
 import java.util.*
 
 object KafkaHandler {
-    private val producer: KafkaProducer<String, String>
     private val consumer: KafkaConsumer<String, String>
     private val kafkaResultAdapter: JsonAdapter<KafkaResult>
 
     init {
-        val producerProps = Properties()
-        producerProps[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] =
-            Settings.setting["BOOTSTRAP_SERVERS_CONFIG"] as String
-        producerProps[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] =
-            Settings.setting["KEY_SERIALIZER_CLASS_CONFIG"] as String
-        producerProps[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] =
-            Settings.setting["VALUE_SERIALIZER_CLASS_CONFIG"] as String
-        producer = KafkaProducer(producerProps)
 
         val consumerProps = Properties()
         consumerProps[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] =
