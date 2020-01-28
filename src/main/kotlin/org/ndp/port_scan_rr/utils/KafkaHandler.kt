@@ -40,7 +40,7 @@ object KafkaHandler {
 
     fun consumeResult(): List<KafkaResult> {
         logger.debug("start kafka consumer...")
-        val msgList = consumer.poll(Duration.ofSeconds(1))
+        val msgList = consumer.poll(Duration.ofSeconds(10))
         logger.debug("consumed results: ${msgList.count()}")
         val results = ArrayList<KafkaResult>()
         if (!msgList.isEmpty) {
