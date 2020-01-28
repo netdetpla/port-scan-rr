@@ -5,10 +5,12 @@ import org.ndp.port_scan_rr.bean.Task
 import org.ndp.port_scan_rr.utils.DatabaseHandler
 import org.ndp.port_scan_rr.utils.IPConverter
 import org.ndp.port_scan_rr.utils.KafkaHandler
+import org.ndp.port_scan_rr.utils.Logger.logger
 
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
+        logger.info("start result recycling...")
         val results = KafkaHandler.consumeResult()
         val updateTasks = ArrayList<Task>()
         val updateIPs = ArrayList<Long>()

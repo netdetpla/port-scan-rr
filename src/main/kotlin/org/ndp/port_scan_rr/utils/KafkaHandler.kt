@@ -8,6 +8,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.ndp.port_scan_rr.bean.KafkaResult
+import org.ndp.port_scan_rr.utils.Logger.logger
 import java.time.Duration
 import java.util.*
 
@@ -38,7 +39,9 @@ object KafkaHandler {
     }
 
     fun consumeResult(): List<KafkaResult> {
+        logger.debug("start kafka consumer...")
         val msgList = consumer.poll(Duration.ofSeconds(1))
+        logger.debug("consumed results: ${msgList.count()}")
         val results = ArrayList<KafkaResult>()
         if (!msgList.isEmpty) {
             for (record in msgList.records(Settings.setting["topic.task"] as String)) {
