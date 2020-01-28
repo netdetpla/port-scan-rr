@@ -38,6 +38,7 @@ tasks {
         mergeServiceFiles()
         manifest {
             attributes(mapOf("Main-Class" to "org.ndp.port_scan_rr.Main"))
+            attributes(mapOf("Multi-Release" to "true"))
         }
     }
 }
