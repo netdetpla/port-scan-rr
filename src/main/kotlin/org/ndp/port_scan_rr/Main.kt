@@ -4,14 +4,14 @@ import org.ndp.port_scan_rr.bean.BatchInsertPort
 import org.ndp.port_scan_rr.bean.Task
 import org.ndp.port_scan_rr.utils.DatabaseHandler
 import org.ndp.port_scan_rr.utils.IPConverter
-import org.ndp.port_scan_rr.utils.KafkaHandler
 import org.ndp.port_scan_rr.utils.Logger.logger
+import org.ndp.port_scan_rr.utils.RedisHandler
 
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
         logger.info("start result recycling...")
-        val results = KafkaHandler.consumeResult()
+        val results = RedisHandler.consumeResult(RedisHandler.generateNonce(5))
         val updateTasks = ArrayList<Task>()
         val updateIPs = ArrayList<Long>()
         val insertPorts = ArrayList<BatchInsertPort>()
@@ -42,5 +42,6 @@ object Main {
         DatabaseHandler.batchUpdateTaskStatus(updateTasks)
         DatabaseHandler.batchUpdateIPFlag(updateIPs)
         DatabaseHandler.batchInsertPort(insertPorts)
+        RedisHandler.returnACK()
     }
 }

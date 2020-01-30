@@ -3,8 +3,6 @@ package org.ndp.port_scan_rr.utils
 import me.liuwj.ktorm.database.Database
 import me.liuwj.ktorm.dsl.*
 import org.ndp.port_scan_rr.bean.BatchInsertPort
-import org.ndp.port_scan_rr.bean.KafkaResult
-import org.ndp.port_scan_rr.bean.Port
 import org.ndp.port_scan_rr.bean.Task
 import org.ndp.port_scan_rr.table.IP
 import org.ndp.port_scan_rr.table.Task as TableTask
