@@ -5,6 +5,7 @@ import me.liuwj.ktorm.dsl.*
 import org.ndp.port_scan_rr.bean.BatchInsertPort
 import org.ndp.port_scan_rr.bean.Task
 import org.ndp.port_scan_rr.table.IP
+import org.ndp.port_scan_rr.utils.Logger.logger
 import org.ndp.port_scan_rr.table.Task as TableTask
 import org.ndp.port_scan_rr.table.Port as TablePort
 
@@ -24,6 +25,7 @@ object DatabaseHandler {
     }
 
     fun batchUpdateTaskStatus(updateTasks: List<Task>) {
+        logger.debug("task size: ${updateTasks.size}")
         TableTask.batchUpdate {
             for (task in updateTasks) {
                 item {
@@ -38,6 +40,7 @@ object DatabaseHandler {
     }
 
     fun batchUpdateIPFlag(updateIPs: List<Long>) {
+        logger.debug("ip size: ${updateIPs.size}")
         IP.batchUpdate {
             for (ip in updateIPs) {
                 item {
@@ -48,6 +51,7 @@ object DatabaseHandler {
     }
 
     fun batchInsertPort(insertPorts: List<BatchInsertPort>) {
+        logger.debug("port size: ${insertPorts.size}")
         TablePort.batchInsert {
             for (port in insertPorts) {
                 item {

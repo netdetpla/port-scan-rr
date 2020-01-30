@@ -7,6 +7,7 @@ import io.lettuce.core.RedisClient
 import io.lettuce.core.XReadArgs
 import io.lettuce.core.api.sync.RedisCommands
 import org.ndp.port_scan_rr.bean.MQResult
+import org.ndp.port_scan_rr.utils.Logger.logger
 
 object RedisHandler {
     private val commands: RedisCommands<String, String>
@@ -38,6 +39,7 @@ object RedisHandler {
             XReadArgs.StreamOffset.lastConsumed(Settings.setting["key.result"] as String)
         )
         val results = ArrayList<MQResult>()
+        logger.debug("result size: ${results.size}")
         for (c in content) {
             results.add(
                 mqResultAdapter.fromJson(c.body["result"]!!)!!
