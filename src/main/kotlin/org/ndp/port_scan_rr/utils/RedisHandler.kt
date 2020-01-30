@@ -50,6 +50,7 @@ object RedisHandler {
     }
 
     fun returnACK() {
+        if (consumedIDs.isEmpty()) return
         commands.xack(
             Settings.setting["key.result"] as String,
             Settings.setting["group"] as String,
