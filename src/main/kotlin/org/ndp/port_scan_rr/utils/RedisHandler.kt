@@ -35,7 +35,6 @@ object RedisHandler {
         )
         val content = commands.xreadgroup(
             consumer,
-            XReadArgs.Builder.count(Settings.setting["handle.size"] as Long),
             XReadArgs.StreamOffset.lastConsumed(Settings.setting["key.result"] as String)
         )
         val results = ArrayList<MQResult>()
