@@ -12,6 +12,7 @@ object Main {
     fun main(args: Array<String>) {
         logger.info("start result recycling...")
         val results = RedisHandler.consumeResult(RedisHandler.generateNonce(5))
+        RedisHandler.returnACK()
         val updateTasks = ArrayList<Task>()
         val updateIPs = ArrayList<Long>()
         val insertPorts = ArrayList<BatchInsertPort>()
@@ -42,6 +43,5 @@ object Main {
         DatabaseHandler.batchUpdateTaskStatus(updateTasks)
         DatabaseHandler.batchUpdateIPFlag(updateIPs)
         DatabaseHandler.batchInsertPort(insertPorts)
-        RedisHandler.returnACK()
     }
 }
